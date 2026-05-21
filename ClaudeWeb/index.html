@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Claude — Your AI Assistant</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header>
+    <div class="logo">
+      <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="18" cy="18" r="18" fill="#D97757"/>
+        <text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" fill="white" font-size="20" font-family="Georgia, serif" font-weight="bold">C</text>
+      </svg>
+      <span>Claude</span>
+    </div>
+    <nav>
+      <a href="#features">Features</a>
+      <a href="#demos">See it in action</a>
+      <a href="#usecases">Use cases</a>
+      <a href="#trylive">Try it live</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="hero-content">
+      <p class="eyebrow">Powered by Anthropic</p>
+      <h1>Your thoughtful<br/>AI assistant</h1>
+      <p class="subtitle">Claude writes code, explains ideas, reviews documents, answers questions, and reasons through hard problems — all in plain conversation.</p>
+      <a href="https://claude.ai" class="cta-btn" target="_blank">Try Claude free</a>
+    </div>
+    <div class="hero-demo">
+      <div class="chat-window">
+        <div class="chat-header">
+          <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+          <span class="chat-title">Claude</span>
+        </div>
+        <div class="chat-body" id="chat-body">
+          <!-- messages injected by JS -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="features" id="features">
+    <h2>What Claude can do</h2>
+    <div class="cards">
+      <div class="card">
+        <div class="card-icon">&#128187;</div>
+        <h3>Write & debug code</h3>
+        <p>Generate functions, spot bugs, explain complex logic, and refactor entire files across any language.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#128196;</div>
+        <h3>Draft documents</h3>
+        <p>Emails, reports, essays, cover letters — Claude writes clearly and adapts to your tone and style.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#129504;</div>
+        <h3>Reason through problems</h3>
+        <p>Break down complex decisions, analyse trade-offs, and think step-by-step through hard questions.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#128218;</div>
+        <h3>Explain anything</h3>
+        <p>From quantum physics to tax law, Claude explains topics at any depth — simply or in expert detail.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#128269;</div>
+        <h3>Research & summarise</h3>
+        <p>Condense long documents, compare sources, extract key points, and surface what matters most.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#127775;</div>
+        <h3>Creative work</h3>
+        <p>Stories, poems, brainstorming, worldbuilding — Claude is a creative partner that matches your voice.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="demos" id="demos">
+    <h2>See it in action</h2>
+    <div class="demo-tabs">
+      <button class="tab active" data-tab="code">Code</button>
+      <button class="tab" data-tab="writing">Writing</button>
+      <button class="tab" data-tab="analysis">Analysis</button>
+    </div>
+    <div class="demo-panels">
+      <div class="panel active" id="demo-code">
+        <div class="demo-prompt">
+          <strong>You:</strong> Write a Python function that fetches a URL with retry logic and exponential back-off.
+        </div>
+        <div class="demo-response">
+          <strong>Claude:</strong>
+          <pre><code>import time
+import requests
+
+def fetch_with_retry(url, max_retries=5, base_delay=1.0):
+    for attempt in range(max_retries):
+        try:
+            response = requests.get(url, timeout=10)
+            response.raise_for_status()
+            return response
+        except requests.RequestException as e:
+            if attempt == max_retries - 1:
+                raise
+            delay = base_delay * (2 ** attempt)
+            print(f"Attempt {attempt + 1} failed: {e}. Retrying in {delay}s…")
+            time.sleep(delay)</code></pre>
+          <p>This doubles the wait time after each failure (1 s → 2 s → 4 s …), preventing thundering-herd issues. Raises the original exception if all retries are exhausted.</p>
+        </div>
+      </div>
+      <div class="panel" id="demo-writing">
+        <div class="demo-prompt">
+          <strong>You:</strong> Write a two-sentence cold email subject line and opener for a B2B SaaS product that reduces meeting overhead.
+        </div>
+        <div class="demo-response">
+          <strong>Claude:</strong>
+          <p><strong>Subject:</strong> Cut your team's meeting load by 40% — without losing alignment</p>
+          <p>Hi [Name], most engineering teams we talk to spend 8+ hours a week in status meetings that could be a shared doc — our async update layer plugs straight into Slack and Linear so your team stays in sync without the calendar tax.</p>
+          <p><em>Tip: personalise the "8+ hours" stat with data from their LinkedIn or job posts for a 3× reply-rate lift.</em></p>
+        </div>
+      </div>
+      <div class="panel" id="demo-analysis">
+        <div class="demo-prompt">
+          <strong>You:</strong> I have two job offers. One pays $120k with equity, the other $145k with no equity. How should I think about this?
+        </div>
+        <div class="demo-response">
+          <strong>Claude:</strong>
+          <p>The $25k salary gap is real money — roughly $2,083/month after tax. Here is how to weigh the equity side:</p>
+          <ul>
+            <li><strong>Stage matters:</strong> Seed-stage equity can be worth 10–100× or zero. Series B+ is more predictable but less upside.</li>
+            <li><strong>Vesting schedule:</strong> 4-year / 1-year cliff is standard. Leaving before the cliff = nothing.</li>
+            <li><strong>Dilution:</strong> Ask what % the option pool is, and how many funding rounds are planned.</li>
+            <li><strong>Liquidity horizon:</strong> Private company equity may be illiquid for 5–10 years.</li>
+          </ul>
+          <p>Rule of thumb: if the equity grant's expected value at exit doesn't cover at least 2–3 years of the salary gap, the higher cash offer is likely the safer choice — unless the mission or role learning matters more to you.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="usecases" id="usecases">
+    <h2>Who uses Claude</h2>
+    <div class="use-grid">
+      <div class="use-item">
+        <span class="use-icon">&#128104;&#8205;&#128187;</span>
+        <h3>Developers</h3>
+        <p>Pair-programming, PR reviews, debugging, documentation, and architecture advice.</p>
+      </div>
+      <div class="use-item">
+        <span class="use-icon">&#128196;</span>
+        <h3>Writers</h3>
+        <p>Editing, ideation, overcoming writer's block, and adapting content for different audiences.</p>
+      </div>
+      <div class="use-item">
+        <span class="use-icon">&#127979;</span>
+        <h3>Students</h3>
+        <p>Understanding difficult concepts, essay feedback, study plans, and exam preparation.</p>
+      </div>
+      <div class="use-item">
+        <span class="use-icon">&#128200;</span>
+        <h3>Business teams</h3>
+        <p>Market research, competitive analysis, slide decks, and strategic planning.</p>
+      </div>
+      <div class="use-item">
+        <span class="use-icon">&#9878;&#65039;</span>
+        <h3>Researchers</h3>
+        <p>Literature review, summarising papers, hypothesis generation, and data interpretation.</p>
+      </div>
+      <div class="use-item">
+        <span class="use-icon">&#128640;</span>
+        <h3>Founders</h3>
+        <p>Investor memos, pitch decks, legal document drafts, and product roadmaps.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="trylive" id="trylive">
+    <h2>Try it live</h2>
+    <p class="trylive-sub">Powered by <a href="https://groq.com" target="_blank">Groq</a> — free, no credit card. <a href="https://console.groq.com/keys" target="_blank">Get your free key</a>, paste it below, and start chatting.</p>
+
+    <div class="trylive-box">
+      <div class="apikey-row">
+        <input type="password" id="api-key" placeholder="gsk_…  (your Groq API key)" autocomplete="off" spellcheck="false" />
+        <button id="save-key-btn" class="secondary-btn">Save</button>
+      </div>
+      <div id="key-status"></div>
+
+      <div class="live-messages" id="live-messages"></div>
+
+      <form class="live-form" id="live-form">
+        <textarea id="live-input" placeholder="Ask anything…" rows="2"></textarea>
+        <button type="submit" id="send-btn" class="cta-btn">Send</button>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    <p>Built with Claude &mdash; <a href="https://anthropic.com" target="_blank">Anthropic</a></p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
